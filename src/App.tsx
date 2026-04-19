@@ -34,7 +34,7 @@ export default function App() {
         onClick={() => handleScore("red")}
         className="flex flex-1 cursor-pointer items-center justify-center bg-pink-600 transition-colors active:bg-pink-700"
       >
-        <span className="text-[30vw] leading-none font-bold tracking-tighter text-white">
+        <span className="text-[30vw] leading-none font-bold tracking-tighter text-white landscape:pb-[5vw]">
           {currentScore.red}
         </span>
       </div>
@@ -43,13 +43,13 @@ export default function App() {
         onClick={() => handleScore("blue")}
         className="flex flex-1 cursor-pointer items-center justify-center bg-blue-600 transition-colors active:bg-blue-700"
       >
-        <span className="text-[30vw] leading-none font-bold tracking-tighter text-white">
+        <span className="text-[30vw] leading-none font-bold tracking-tighter text-white landscape:pb-[5vw]">
           {currentScore.blue}
         </span>
       </div>
 
       <div className="pointer-events-none absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center mix-blend-color-burn">
-        <span className="text-[35vh] leading-none font-black text-white/30 drop-shadow-[0_0_2vh_rgba(0,0,0,0.8)]">
+        <span className="text-[15vw] leading-none font-black text-white/30 drop-shadow-[0_0_2vh_rgba(0,0,0,0.8)] landscape:pb-[5vw]">
           X
         </span>
       </div>
