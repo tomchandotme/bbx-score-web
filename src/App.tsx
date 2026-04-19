@@ -49,7 +49,7 @@ export default function App() {
       </div>
 
       <div className="pointer-events-none absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center mix-blend-color-burn">
-        <span className="text-[15vw] leading-none font-black text-white/30 drop-shadow-[0_0_2vh_rgba(0,0,0,0.8)] landscape:pb-[5vw]">
+        <span className="text-[40vw] leading-none font-black text-white/15 font-stretch-ultra-expanded drop-shadow-[0_0_2vh_rgba(0,0,0,0.8)] landscape:pb-[5vw]">
           X
         </span>
       </div>
@@ -75,7 +75,7 @@ export default function App() {
       </div>
 
       {(currentScore.red >= WIN_SCORE || currentScore.blue >= WIN_SCORE) && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 animate-bounce rounded-full bg-yellow-400 px-6 py-2 text-xl font-bold text-black">
+        <div className="absolute top-8 left-1/2 -translate-x-1/2 animate-bounce rounded-full bg-yellow-400 px-6 py-2 text-xl font-bold text-black">
           {currentScore.red >= WIN_SCORE ? "RED WINS!" : "BLUE WINS!"}
         </div>
       )}
