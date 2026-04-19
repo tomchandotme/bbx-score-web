@@ -1,26 +1,8 @@
-import { Fullscreen, Redo, Undo } from "lucide-react";
+import { Redo, Undo } from "lucide-react";
 import { useState } from "react";
 
 const WIN_SCORE = 4;
 const SCORE_LIMIT = 10;
-
-type FullscreenRequestElement = HTMLElement & {
-  webkitRequestFullScreen?: () => Promise<void> | void;
-  mozRequestFullScreen?: () => Promise<void> | void;
-  msRequestFullscreen?: () => Promise<void> | void;
-};
-
-type FullscreenExitDocument = Document & {
-  webkitExitFullscreen?: () => Promise<void> | void;
-  mozCancelFullScreen?: () => Promise<void> | void;
-  msExitFullscreen?: () => Promise<void> | void;
-};
-
-type FullscreenDocument = Document & {
-  webkitFullscreenElement?: Element | null;
-  mozFullScreenElement?: Element | null;
-  msFullscreenElement?: Element | null;
-};
 
 export default function App() {
   const [history, setHistory] = useState([{ red: 0, blue: 0 }]);
@@ -46,49 +28,13 @@ export default function App() {
     setCurrentIndex(0);
   };
 
-  const toggleFullScreen = () => {
-    const doc = window.document;
-    const docEl = doc.documentElement as FullscreenRequestElement;
-
-    const requestFullScreen =
-      docEl.requestFullscreen?.bind(docEl) ??
-      docEl.webkitRequestFullScreen?.bind(docEl) ??
-      docEl.mozRequestFullScreen?.bind(docEl) ??
-      docEl.msRequestFullscreen?.bind(docEl);
-
-    const cancelFullScreen =
-      doc.exitFullscreen?.bind(doc) ??
-      (doc as FullscreenExitDocument).webkitExitFullscreen?.bind(doc) ??
-      (doc as FullscreenExitDocument).mozCancelFullScreen?.bind(doc) ??
-      (doc as FullscreenExitDocument).msExitFullscreen?.bind(doc);
-
-    const isFullScreen =
-      doc.fullscreenElement ??
-      (doc as FullscreenDocument).webkitFullscreenElement ??
-      (doc as FullscreenDocument).mozFullScreenElement ??
-      (doc as FullscreenDocument).msFullscreenElement;
-
-    if (!isFullScreen) {
-      if (requestFullScreen) {
-        const result = requestFullScreen();
-        if (result && typeof (result as Promise<void>).catch === "function") {
-          (result as Promise<void>).catch((err: Error) => {
-            console.warn("fullscreen not supported", err.message);
-          });
-        }
-      }
-    } else if (cancelFullScreen) {
-      cancelFullScreen();
-    }
-  };
-
   return (
     <div className="flex h-screen w-screen touch-manipulation overflow-hidden select-none">
       <div
         onClick={() => handleScore("red")}
         className="flex flex-1 cursor-pointer items-center justify-center bg-pink-600 transition-colors active:bg-pink-700"
       >
-        <span className="text-[30vw] leading-none font-bold text-white">
+        <span className="text-[30vw] leading-none font-bold tracking-tighter text-white">
           {currentScore.red}
         </span>
       </div>
@@ -97,7 +43,7 @@ export default function App() {
         onClick={() => handleScore("blue")}
         className="flex flex-1 cursor-pointer items-center justify-center bg-blue-600 transition-colors active:bg-blue-700"
       >
-        <span className="text-[30vw] leading-none font-bold text-white">
+        <span className="text-[30vw] leading-none font-bold tracking-tighter text-white">
           {currentScore.blue}
         </span>
       </div>
@@ -118,12 +64,6 @@ export default function App() {
         </button>
         <button onClick={reset} className="px-4 text-xl font-bold text-white">
           RESET
-        </button>
-        <button
-          onClick={toggleFullScreen}
-          className="px-4 text-xl font-bold text-white"
-        >
-          <Fullscreen className="size-8 stroke-2" />
         </button>
         <button
           onClick={redo}
