@@ -28,13 +28,26 @@
 
 html,
 body,
-#root,
-.app-shell {
+#root {
   width: 100%;
   max-width: 100%;
   height: 100%;
   height: -webkit-fill-available;
   height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #000;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Fill the visual viewport so team colors cover iOS landscape letterboxing. */
+.app-shell {
+  position: fixed;
+  inset: 0;
+  width: auto;
+  max-width: none;
+  height: auto;
   overflow: hidden;
   overscroll-behavior: none;
   background: #000;
@@ -110,18 +123,21 @@ body {
   }
 }
 
-/* Safari / Chrome landscape overlays sit on the page; PWA does not. */
+/*
+  iOS Safari landscape overlays sit ON the page; Chrome / Firefox / PWA
+  reserve chrome beside the webview, so the extra 3.5rem gutter double-insets.
+*/
 @media (orientation: landscape) and (display-mode: browser) {
-  .app-header {
+  :root[data-safari-overlay] .app-header {
     padding-left: max(1.25rem, var(--safe-l));
     padding-right: max(3.5rem, var(--safe-r));
   }
 
-  .team-panel:first-of-type .team-actions {
+  :root[data-safari-overlay] .team-panel:first-of-type .team-actions {
     padding-left: max(1.25rem, var(--safe-l));
   }
 
-  .team-panel:last-of-type .team-actions {
+  :root[data-safari-overlay] .team-panel:last-of-type .team-actions {
     padding-right: max(3.5rem, var(--safe-r));
   }
 }

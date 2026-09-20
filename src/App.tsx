@@ -114,7 +114,7 @@ export default function App() {
 
   return (
     <div
-      className="app-shell relative flex h-dvh w-full max-w-full flex-col overflow-hidden bg-black text-white select-none"
+      className="app-shell fixed inset-0 flex flex-col overflow-hidden bg-black text-white select-none"
       onContextMenu={(event) => event.preventDefault()}
     >
       <header className="app-header relative z-20 flex shrink-0 items-center justify-between gap-2 bg-black/85 backdrop-blur-md landscape:absolute landscape:inset-x-0 landscape:top-0 landscape:bg-black/35">
