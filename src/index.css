@@ -1,6 +1,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
 @import "tailwindcss";
 
+:root {
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+}
+
+@supports (padding: constant(safe-area-inset-top)) {
+  :root {
+    --safe-t: constant(safe-area-inset-top, 0px);
+    --safe-r: constant(safe-area-inset-right, 0px);
+    --safe-b: constant(safe-area-inset-bottom, 0px);
+    --safe-l: constant(safe-area-inset-left, 0px);
+  }
+}
+
+@supports (padding: env(safe-area-inset-top)) {
+  :root {
+    --safe-t: env(safe-area-inset-top, 0px);
+    --safe-r: env(safe-area-inset-right, 0px);
+    --safe-b: env(safe-area-inset-bottom, 0px);
+    --safe-l: env(safe-area-inset-left, 0px);
+  }
+}
+
 html,
 body,
 #root {
@@ -21,6 +46,60 @@ body {
   touch-action: manipulation;
 }
 
+.app-header {
+  padding-top: max(0.5rem, var(--safe-t));
+  padding-right: max(0.5rem, var(--safe-r));
+  padding-bottom: 0.5rem;
+  padding-left: max(0.5rem, var(--safe-l));
+}
+
+.team-score {
+  padding-left: max(0.75rem, var(--safe-l));
+  padding-right: max(0.75rem, var(--safe-r));
+}
+
+.team-actions {
+  padding-top: 0.5rem;
+  padding-right: max(0.5rem, var(--safe-r));
+  padding-bottom: 0.5rem;
+  padding-left: max(0.5rem, var(--safe-l));
+}
+
+@media (orientation: portrait) {
+  .team-panel:last-of-type .team-actions {
+    padding-bottom: max(0.75rem, var(--safe-b));
+  }
+}
+
+@media (orientation: landscape) {
+  .team-score,
+  .team-actions {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .team-panel:first-of-type .team-score,
+  .team-panel:first-of-type .team-actions {
+    padding-left: max(0.5rem, var(--safe-l));
+  }
+
+  .team-panel:last-of-type .team-score,
+  .team-panel:last-of-type .team-actions {
+    padding-right: max(0.5rem, var(--safe-r));
+  }
+
+  .team-actions {
+    padding-bottom: max(0.75rem, var(--safe-b));
+  }
+}
+
+.rules-overlay {
+  padding-top: max(0.75rem, var(--safe-t));
+  padding-right: max(0.75rem, var(--safe-r));
+  padding-bottom: max(0.75rem, var(--safe-b));
+  padding-left: max(0.75rem, var(--safe-l));
+}
+
 @keyframes finish-flash {
   0% {
     opacity: 0;
@@ -38,4 +117,6 @@ body {
 
 .finish-flash {
   animation: finish-flash 1.6s ease-out forwards;
+  padding: max(1rem, var(--safe-t)) max(1rem, var(--safe-r))
+    max(1rem, var(--safe-b)) max(1rem, var(--safe-l));
 }

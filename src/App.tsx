@@ -117,7 +117,7 @@ export default function App() {
       className="relative flex h-dvh w-dvw flex-col overflow-hidden bg-black text-white select-none"
       onContextMenu={(event) => event.preventDefault()}
     >
-      <header className="relative z-20 flex shrink-0 items-center justify-between gap-2 bg-black/85 px-2 pt-[max(0.4rem,env(safe-area-inset-top))] pr-[max(0.5rem,env(safe-area-inset-right))] pb-2 pl-[max(0.5rem,env(safe-area-inset-left))] backdrop-blur-md">
+      <header className="app-header relative z-20 flex shrink-0 items-center justify-between gap-2 bg-black/85 backdrop-blur-md">
         <div className="flex items-center gap-1">
           <IconButton label="Undo" disabled={!canUndo} onClick={undo}>
             <Undo className="size-6 stroke-[2.25]" />
@@ -258,17 +258,11 @@ function TeamPanel({
 
   return (
     <section
-      className={`relative flex min-h-0 flex-1 flex-col ${
+      className={`team-panel relative flex min-h-0 flex-1 flex-col ${
         isRed ? "bg-pink-600" : "bg-blue-600"
       } ${isLoser ? "brightness-75" : ""}`}
     >
-      <div
-        className={`flex min-h-0 flex-1 flex-col items-center justify-center px-3 ${
-          isRed
-            ? "pl-[max(0.75rem,env(safe-area-inset-left))]"
-            : "pr-[max(0.75rem,env(safe-area-inset-right))] landscape:pr-[max(0.75rem,env(safe-area-inset-right))]"
-        }`}
-      >
+      <div className="team-score flex min-h-0 flex-1 flex-col items-center justify-center">
         <p className="text-[0.7rem] font-black tracking-[0.35em] text-white/80 uppercase sm:text-sm">
           {player}
         </p>
@@ -298,13 +292,7 @@ function TeamPanel({
         </p>
       )}
 
-      <div
-        className={`grid grid-cols-2 gap-2 p-2 ${
-          isRed
-            ? "pl-[max(0.5rem,env(safe-area-inset-left))]"
-            : "pr-[max(0.5rem,env(safe-area-inset-right))]"
-        } pb-[max(0.5rem,env(safe-area-inset-bottom))] landscape:pb-[max(0.5rem,env(safe-area-inset-bottom))]`}
-      >
+      <div className="team-actions grid grid-cols-2 gap-2">
         {FINISHES.map((finish) => {
           const isLast = last?.finish === finish.id;
           return (
@@ -346,7 +334,7 @@ function RulesSheet({
   onClose: () => void;
 }) {
   return (
-    <div className="absolute inset-0 z-50 flex items-end justify-center bg-black/70 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pr-[max(0.75rem,env(safe-area-inset-right))] pb-[max(0.75rem,env(safe-area-inset-bottom))] pl-[max(0.75rem,env(safe-area-inset-left))] landscape:items-center">
+    <div className="rules-overlay absolute inset-0 z-50 flex items-end justify-center bg-black/70 landscape:items-center">
       <button
         type="button"
         aria-label="Close rules"
