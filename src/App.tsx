@@ -42,6 +42,11 @@ export default function App() {
   const [winScore, setWinScore] = useState<WinScore>(readWinScore);
   const [resetArmed, setResetArmed] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [flash, setFlash] = useState<{
+    id: number;
+    player: Player;
+    finish: FinishId;
+  } | null>(null);
 
   const currentScore = history[currentIndex];
   const winner = winnerOf(currentScore, winScore);
@@ -54,6 +59,12 @@ export default function App() {
     return () => window.clearTimeout(timer);
   }, [resetArmed]);
 
+  useEffect(() => {
+    if (!flash) return;
+    const timer = window.setTimeout(() => setFlash(null), 1100);
+    return () => window.clearTimeout(timer);
+  }, [flash]);
+
   const handleScore = (player: Player, finish: FinishId) => {
     const nextScore = applyFinish(currentScore, player, finish, winScore);
     if (!nextScore) return;
@@ -63,16 +74,19 @@ export default function App() {
     setHistory([...nextHistory, nextScore]);
     setCurrentIndex(nextHistory.length);
     setResetArmed(false);
+    setFlash({ id: Date.now(), player, finish });
   };
 
   const undo = () => {
     setCurrentIndex((prev) => Math.max(0, prev - 1));
     setResetArmed(false);
+    setFlash(null);
   };
 
   const redo = () => {
     setCurrentIndex((prev) => Math.min(history.length - 1, prev + 1));
     setResetArmed(false);
+    setFlash(null);
   };
 
   const reset = () => {
@@ -86,6 +100,7 @@ export default function App() {
     setHistory([INITIAL_SCORE]);
     setCurrentIndex(0);
     setResetArmed(false);
+    setFlash(null);
   };
 
   const changeWinScore = (value: WinScore) => {
@@ -99,7 +114,7 @@ export default function App() {
 
   return (
     <div
-      className="flex h-dvh w-dvw flex-col overflow-hidden bg-black text-white select-none"
+      className="relative flex h-dvh w-dvw flex-col overflow-hidden bg-black text-white select-none"
       onContextMenu={(event) => event.preventDefault()}
     >
       <header className="relative z-20 flex shrink-0 items-center justify-between gap-2 bg-black/85 px-2 pt-[max(0.4rem,env(safe-area-inset-top))] pr-[max(0.5rem,env(safe-area-inset-right))] pb-2 pl-[max(0.5rem,env(safe-area-inset-left))] backdrop-blur-md">
@@ -163,6 +178,28 @@ export default function App() {
           </span>
         </div>
       </div>
+
+      {flash && (
+        <div
+          key={flash.id}
+          className="finish-flash pointer-events-none absolute inset-0 z-40 flex items-center justify-center"
+          aria-live="polite"
+        >
+          <div
+            className={`absolute inset-0 opacity-30 ${
+              flash.player === "red" ? "bg-pink-600" : "bg-blue-600"
+            }`}
+          />
+          <div className="relative px-4 text-center drop-shadow-[0_10px_28px_rgba(0,0,0,0.72)]">
+            <p className="text-[clamp(4.5rem,22vmin,10rem)] leading-none font-black tracking-tighter">
+              +{FINISH_BY_ID[flash.finish].points}
+            </p>
+            <p className="mt-1 text-[clamp(1.1rem,4.4vmin,2.25rem)] font-black tracking-[0.35em] uppercase">
+              {FINISH_BY_ID[flash.finish].label}
+            </p>
+          </div>
+        </div>
+      )}
 
       {rulesOpen && (
         <RulesSheet
@@ -253,17 +290,13 @@ function TeamPanel({
             ))}
           </div>
         )}
-        {last && (
-          <p className="mt-3 text-xs font-bold tracking-widest text-white/80 uppercase">
-            {`${FINISH_BY_ID[last.finish].label} +${FINISH_BY_ID[last.finish].points}`}
-          </p>
-        )}
-        {isWinner && (
-          <p className="mt-2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-black tracking-[0.2em] text-black uppercase">
-            Wins
-          </p>
-        )}
       </div>
+
+      {isWinner && (
+        <p className="pointer-events-none absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-black tracking-[0.2em] text-black uppercase">
+          Wins
+        </p>
+      )}
 
       <div
         className={`grid grid-cols-2 gap-2 p-2 ${
@@ -313,7 +346,7 @@ function RulesSheet({
   onClose: () => void;
 }) {
   return (
-    <div className="absolute inset-0 z-30 flex items-end justify-center bg-black/70 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pr-[max(0.75rem,env(safe-area-inset-right))] pb-[max(0.75rem,env(safe-area-inset-bottom))] pl-[max(0.75rem,env(safe-area-inset-left))] landscape:items-center">
+    <div className="absolute inset-0 z-50 flex items-end justify-center bg-black/70 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pr-[max(0.75rem,env(safe-area-inset-right))] pb-[max(0.75rem,env(safe-area-inset-bottom))] pl-[max(0.75rem,env(safe-area-inset-left))] landscape:items-center">
       <button
         type="button"
         aria-label="Close rules"

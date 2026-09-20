@@ -20,3 +20,22 @@ body {
   font-variant-numeric: tabular-nums;
   touch-action: manipulation;
 }
+
+@keyframes finish-flash {
+  0% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.finish-flash {
+  animation: finish-flash 1.05s ease-out forwards;
+}
