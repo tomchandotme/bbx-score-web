@@ -286,7 +286,7 @@ function TeamPanel({
         )}
 
         {isWinner && (
-          <p className="pointer-events-none absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-black tracking-[0.2em] text-black uppercase">
+          <p className="pointer-events-none absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-black tracking-[0.2em] text-black uppercase landscape:top-[calc(3.25rem+var(--safe-t))]">
             Wins
           </p>
         )}
