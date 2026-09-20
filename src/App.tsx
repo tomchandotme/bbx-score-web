@@ -114,10 +114,10 @@ export default function App() {
 
   return (
     <div
-      className="relative flex h-dvh w-dvw flex-col overflow-hidden bg-black text-white select-none"
+      className="app-shell relative flex h-dvh w-full max-w-full flex-col overflow-hidden bg-black text-white select-none"
       onContextMenu={(event) => event.preventDefault()}
     >
-      <header className="app-header relative z-20 flex shrink-0 items-center justify-between gap-2 bg-black/85 backdrop-blur-md">
+      <header className="app-header relative z-20 flex shrink-0 items-center justify-between gap-2 bg-black/85 backdrop-blur-md landscape:absolute landscape:inset-x-0 landscape:top-0 landscape:bg-black/35">
         <div className="flex items-center gap-1">
           <IconButton label="Undo" disabled={!canUndo} onClick={undo}>
             <Undo className="size-6 stroke-[2.25]" />
@@ -287,7 +287,7 @@ function TeamPanel({
       </div>
 
       {isWinner && (
-        <p className="pointer-events-none absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-black tracking-[0.2em] text-black uppercase">
+        <p className="pointer-events-none absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-black tracking-[0.2em] text-black uppercase landscape:top-[calc(3.25rem+var(--safe-t))]">
           Wins
         </p>
       )}
