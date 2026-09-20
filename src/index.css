@@ -1,10 +1,155 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
 @import "tailwindcss";
 
+:root {
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+}
+
+@supports (padding: constant(safe-area-inset-top)) {
+  :root {
+    --safe-t: constant(safe-area-inset-top, 0px);
+    --safe-r: constant(safe-area-inset-right, 0px);
+    --safe-b: constant(safe-area-inset-bottom, 0px);
+    --safe-l: constant(safe-area-inset-left, 0px);
+  }
+}
+
+@supports (padding: env(safe-area-inset-top)) {
+  :root {
+    --safe-t: env(safe-area-inset-top, 0px);
+    --safe-r: env(safe-area-inset-right, 0px);
+    --safe-b: env(safe-area-inset-bottom, 0px);
+    --safe-l: env(safe-area-inset-left, 0px);
+  }
+}
+
+html,
+body,
+#root,
+.app-shell {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  height: -webkit-fill-available;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #000;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
 body {
   font-family: "Geist", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-variant-numeric: tabular-nums;
-  background: #000;
+  touch-action: manipulation;
+}
+
+.app-header {
+  padding-top: max(0.5rem, var(--safe-t));
+  padding-right: max(0.5rem, var(--safe-r));
+  padding-bottom: 0.5rem;
+  padding-left: max(0.5rem, var(--safe-l));
+}
+
+.team-score {
+  padding-left: max(0.75rem, var(--safe-l));
+  padding-right: max(0.75rem, var(--safe-r));
+}
+
+.team-actions {
+  padding-top: 0.5rem;
+  padding-right: max(0.5rem, var(--safe-r));
+  padding-bottom: 0.5rem;
+  padding-left: max(0.5rem, var(--safe-l));
+}
+
+@media (orientation: portrait) {
+  .team-panel:last-of-type .team-actions {
+    padding-bottom: max(0.75rem, var(--safe-b));
+  }
+}
+
+@media (orientation: landscape) {
+  .app-header {
+    padding-top: max(0.4rem, var(--safe-t));
+    padding-right: max(1rem, var(--safe-r));
+    padding-bottom: 0.4rem;
+    padding-left: max(1rem, var(--safe-l));
+  }
+
+  .team-score,
+  .team-actions {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .team-score {
+    padding-top: calc(3.1rem + var(--safe-t));
+  }
+
+  .team-panel:first-of-type .team-score,
+  .team-panel:first-of-type .team-actions {
+    padding-left: max(1rem, var(--safe-l));
+  }
+
+  .team-panel:last-of-type .team-score,
+  .team-panel:last-of-type .team-actions {
+    padding-right: max(1rem, var(--safe-r));
+  }
+
+  .team-actions {
+    padding-bottom: max(0.75rem, var(--safe-b));
+  }
+}
+
+/* Safari / Chrome landscape overlays sit on the page; PWA does not. */
+@media (orientation: landscape) and (display-mode: browser) {
+  .app-header {
+    padding-left: max(1.25rem, var(--safe-l));
+    padding-right: max(3.5rem, var(--safe-r));
+  }
+
+  .team-panel:first-of-type .team-score,
+  .team-panel:first-of-type .team-actions {
+    padding-left: max(1.25rem, var(--safe-l));
+  }
+
+  .team-panel:last-of-type .team-score,
+  .team-panel:last-of-type .team-actions {
+    padding-right: max(3.5rem, var(--safe-r));
+  }
+}
+
+.rules-overlay {
+  padding-top: max(0.75rem, var(--safe-t));
+  padding-right: max(0.75rem, var(--safe-r));
+  padding-bottom: max(0.75rem, var(--safe-b));
+  padding-left: max(0.75rem, var(--safe-l));
+}
+
+@keyframes finish-flash {
+  0% {
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.finish-flash {
+  animation: finish-flash 1.6s ease-out forwards;
+  padding: max(1rem, var(--safe-t)) max(1rem, var(--safe-r))
+    max(1rem, var(--safe-b)) max(1rem, var(--safe-l));
 }
