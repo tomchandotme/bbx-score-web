@@ -83,28 +83,30 @@ body {
     padding-left: max(1rem, var(--safe-l));
   }
 
-  .team-score,
-  .team-actions {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-  }
-
   .team-score {
     padding-top: calc(3.1rem + var(--safe-t));
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
   }
 
-  .team-panel:first-of-type .team-score,
+  .team-actions {
+    padding-top: calc(3.1rem + var(--safe-t));
+    padding-bottom: max(0.75rem, var(--safe-b));
+  }
+
+  .team-actions > button {
+    min-height: 0;
+  }
+
+  /* Outer-edge button columns: red left, blue right. */
   .team-panel:first-of-type .team-actions {
+    padding-right: 0.5rem;
     padding-left: max(1rem, var(--safe-l));
   }
 
-  .team-panel:last-of-type .team-score,
   .team-panel:last-of-type .team-actions {
     padding-right: max(1rem, var(--safe-r));
-  }
-
-  .team-actions {
-    padding-bottom: max(0.75rem, var(--safe-b));
+    padding-left: 0.5rem;
   }
 }
 
@@ -115,12 +117,10 @@ body {
     padding-right: max(3.5rem, var(--safe-r));
   }
 
-  .team-panel:first-of-type .team-score,
   .team-panel:first-of-type .team-actions {
     padding-left: max(1.25rem, var(--safe-l));
   }
 
-  .team-panel:last-of-type .team-score,
   .team-panel:last-of-type .team-actions {
     padding-right: max(3.5rem, var(--safe-r));
   }
