@@ -1,0 +1,18 @@
+{
+  "name": "Beyblade X Score",
+  "short_name": "BBX Score",
+  "description": "Live Beyblade X scoreboard for Spin, Burst, Over, and Xtreme finishes.",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "any",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
