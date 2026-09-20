@@ -96,16 +96,22 @@ body {
     padding-left: max(1rem, var(--safe-l));
   }
 
-  .team-score {
+  /* Keep overlay header clearance on the panel, not the button wrapper. */
+  .team-panel {
     padding-top: calc(max(0.4rem, var(--safe-t)) + 3.15rem);
+    padding-bottom: var(--safe-b);
+  }
+
+  .team-score {
+    padding-top: 0;
     padding-right: 0.75rem;
     padding-left: 0.75rem;
   }
 
-  /* Header is overlay: 0.4rem + 2.75rem (h-11) + 0.4rem, plus 0.5rem gap. */
+  /* Equal padding-y on every height, including short landscape phones. */
   .team-actions {
-    padding-top: calc(max(0.4rem, var(--safe-t)) + 3.65rem);
-    padding-bottom: max(0.75rem, var(--safe-b));
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
   .team-actions > button {
