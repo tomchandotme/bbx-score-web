@@ -114,7 +114,7 @@ export default function App() {
 
   return (
     <div
-      className="app-shell relative flex h-dvh w-full max-w-full flex-col overflow-hidden bg-black text-white select-none"
+      className="app-shell fixed inset-0 flex flex-col overflow-hidden bg-black text-white select-none"
       onContextMenu={(event) => event.preventDefault()}
     >
       <header className="app-header relative z-20 flex shrink-0 items-center justify-between gap-2 bg-black/85 backdrop-blur-md landscape:absolute landscape:inset-x-0 landscape:top-0 landscape:bg-black/35">
@@ -258,11 +258,11 @@ function TeamPanel({
 
   return (
     <section
-      className={`team-panel relative flex min-h-0 flex-1 flex-col ${
-        isRed ? "bg-pink-600" : "bg-blue-600"
+      className={`team-panel relative flex min-h-0 flex-1 flex-col landscape:flex-row ${
+        isRed ? "bg-pink-600 landscape:flex-row-reverse" : "bg-blue-600"
       } ${isLoser ? "brightness-75" : ""}`}
     >
-      <div className="team-score flex min-h-0 flex-1 flex-col items-center justify-center">
+      <div className="team-score relative flex min-h-0 flex-1 flex-col items-center justify-center">
         <p className="text-[0.7rem] font-black tracking-[0.35em] text-white/80 uppercase sm:text-sm">
           {player}
         </p>
@@ -284,15 +284,15 @@ function TeamPanel({
             ))}
           </div>
         )}
+
+        {isWinner && (
+          <p className="pointer-events-none absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-black tracking-[0.2em] text-black uppercase landscape:top-[calc(3.25rem+var(--safe-t))]">
+            Wins
+          </p>
+        )}
       </div>
 
-      {isWinner && (
-        <p className="pointer-events-none absolute top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-yellow-400 px-4 py-1 text-sm font-black tracking-[0.2em] text-black uppercase landscape:top-[calc(3.25rem+var(--safe-t))]">
-          Wins
-        </p>
-      )}
-
-      <div className="team-actions grid grid-cols-2 gap-2">
+      <div className="team-actions flex flex-row gap-2 landscape:w-[min(10.5rem,36%)] landscape:shrink-0 landscape:flex-col">
         {FINISHES.map((finish) => {
           const isLast = last?.finish === finish.id;
           return (
@@ -302,7 +302,7 @@ function TeamPanel({
               disabled={locked}
               onClick={() => onScore(player, finish.id)}
               aria-label={`${player} ${finish.label} finish, ${finish.points} point${finish.points === 1 ? "" : "s"}`}
-              className={`flex min-h-[3.35rem] flex-col items-center justify-center rounded-2xl px-2 py-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.18)] transition-transform active:scale-[0.97] disabled:opacity-40 sm:min-h-20 [@media(orientation:landscape)_and_(max-height:500px)]:min-h-12 ${
+              className={`flex min-h-[3.35rem] min-w-0 flex-1 flex-col items-center justify-center rounded-2xl px-1 py-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.18)] transition-transform active:scale-[0.97] disabled:opacity-40 sm:px-2 landscape:min-h-0 ${
                 isLast
                   ? "bg-black/40 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.85)]"
                   : finish.id === "xtreme"
@@ -310,10 +310,10 @@ function TeamPanel({
                     : "bg-black/20"
               }`}
             >
-              <span className="text-[clamp(1.35rem,4.6vmin,2.35rem)] leading-none font-black">
+              <span className="text-[clamp(1.2rem,4.2vmin,2.35rem)] leading-none font-black">
                 {finish.points}
               </span>
-              <span className="mt-1 text-[0.65rem] font-black tracking-[0.18em] uppercase sm:text-xs">
+              <span className="mt-1 text-[0.6rem] font-black tracking-[0.12em] uppercase sm:text-xs sm:tracking-[0.18em]">
                 {finish.label}
               </span>
             </button>
