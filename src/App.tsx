@@ -61,7 +61,7 @@ export default function App() {
 
   useEffect(() => {
     if (!flash) return;
-    const timer = window.setTimeout(() => setFlash(null), 1100);
+    const timer = window.setTimeout(() => setFlash(null), 1650);
     return () => window.clearTimeout(timer);
   }, [flash]);
 
@@ -190,11 +190,11 @@ export default function App() {
               flash.player === "red" ? "bg-pink-600" : "bg-blue-600"
             }`}
           />
-          <div className="relative px-4 text-center drop-shadow-[0_10px_28px_rgba(0,0,0,0.72)]">
-            <p className="text-[clamp(4.5rem,22vmin,10rem)] leading-none font-black tracking-tighter">
+          <div className="relative rounded-[2rem] bg-black/55 px-8 py-5 text-center backdrop-blur-sm">
+            <p className="text-[clamp(4rem,18vmin,8.5rem)] leading-none font-black tracking-tighter">
               +{FINISH_BY_ID[flash.finish].points}
             </p>
-            <p className="mt-1 text-[clamp(1.1rem,4.4vmin,2.25rem)] font-black tracking-[0.35em] uppercase">
+            <p className="mt-1 text-[clamp(1.05rem,4vmin,2rem)] font-black tracking-[0.35em] uppercase">
               {FINISH_BY_ID[flash.finish].label}
             </p>
           </div>
